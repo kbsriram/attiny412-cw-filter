@@ -1,0 +1,32 @@
+CC=gcc
+CFLAGS=-g -Wall
+
+all: check rotary_check button_check
+
+check.o: check.c dsp.h
+	$(CC) $(CFLAGS) -c check.c
+
+check: check.o
+	$(CC) $(CFLAGS) check.o -o check -lm
+
+rotary_check.o: rotary_check.c rotary.h
+	$(CC) $(CFLAGS) -c rotary_check.c
+
+rotary.o: rotary.c rotary.h
+	$(CC) $(CFLAGS) -c rotary.c
+
+rotary_check: rotary_check.o rotary.o
+	$(CC) $(CFLAGS) $(LDFLAGS)  $(LIBS) -o $@ $^
+
+button_check.o: button_check.c button.h
+	$(CC) $(CFLAGS) -c button_check.c
+
+button.o: button.c button.h
+	$(CC) $(CFLAGS) -c button.c
+
+button_check: button_check.o button.o
+	$(CC) $(CFLAGS) $(LDFLAGS)  $(LIBS) -o $@ $^
+
+clean:
+	rm -f *.o *.elf *.lst *.map *.hex
+
